@@ -79,7 +79,7 @@ if __name__=='__main__':
     rospy.on_shutdown(stop)
 
     #Setup Publishers and subscribers here
-    controller = Controller(dt=1.0/5000.0)
+    controller = Controller(dt=1.0/100.0)
     
 
     print("The Controller is Running")
