@@ -31,22 +31,14 @@ if __name__=='__main__':
 
     #Run the node
     while not rospy.is_shutdown():
+        
         current_time = rospy.get_time()-init_time
-
-        #Write your code here
-        set_point_data.time = rospy.get_time()-init_time
+        
         offset = rospy.get_param('setpoint/offset',default=0)
         amplitude = rospy.get_param('setpoint/amplitude',default=1)
         
-        # if(set_point_data.time>=0.5 and set_point_data.time<3):
-        #   set_point_data.set_point = 4.0 #?
-        # elif(set_point_data.time>=3 and set_point_data.time<6):
-        #   set_point_data.set_point = 8
-        # elif(set_point_data.time>=6):
-        #   set_point_data.set_point = 0.15
-        # else:
-        #    set_point_data.set_point = 0.0
-
+        # Assign data to message and publish
+        set_point_data.time = rospy.get_time()-init_time
         set_point_data.setPoint =  amplitude * np.sin(current_time) + offset
         set_point_pub.publish(set_point_data)
 

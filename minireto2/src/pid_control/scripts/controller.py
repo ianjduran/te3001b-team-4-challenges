@@ -10,6 +10,7 @@ from pid_control.msg import set_point
 
 #Setup parameters, vriables and callback functions here (if required)
 
+# Define 
 class Controller:
     def __init__(self, dt) -> None:
       self.kp = rospy.get_param('controller_kp', default=0)
@@ -21,10 +22,10 @@ class Controller:
       self.error = 0.0
       self.u_val = 0.0 # Control Force
       self.Error_prev = 0.0
-      self.Error_Int = 0.0
-      self.estimated_output = 0.0
+      self.Error_Int = 0.0 # Accumulator for the integral
+      self.estimated_output = 0.0 # Output received from the system
       self.output_status = "Not Turning"
-      self.output_timestamp = 0.0
+      self.output_timestamp = 0.0 
       self.setPoint = 0.0
       self.setPoint_time = 0.0
 
@@ -33,29 +34,33 @@ class Controller:
       self.motor_estimated_output_sub = rospy.Subscriber('/motor_output', motor_output, self.motor_estimated_output_cb)
       self.motor_input_pub = rospy.Publisher('/motor_input', motor_input, queue_size=1)
 
-      self.input_msg = motor_input()
+      self.input_msg = motor_input() # Declare the message variable to publish data
 
+    # Callback function when set_point_sub notices a new message
     def setpoint_data_cb(self, msg):
       self.setPoint = msg.setPoint
       self.setPoint_time = msg.time
    
-    
+    # Callback function when motor_estimated_output_sub notices a new message
     def motor_estimated_output_cb(self, msg):
       self.estimated_output = msg.output
       self.output_status = msg.status
       self.output_timestamp = msg.time
 
+    # Function to generate the input signal
     def control(self):
-
+      
+      # Assign Error and integral
       self.error = self.setPoint - self.estimated_output
       self.Error_Int+= self.error * self.dt
 
+      # Control
       self.u_val = self.kp* self.error + self.ki * self.Error_Int + self.kd * (self.error - self.Error_prev)/self.dt
 
       self.Error_prev = self.error
 
+      # Save data and publish
       self.input_msg.input = self.u_val
-
       self.input_msg.time = self.output_timestamp
 
       self.motor_input_pub.publish(self.input_msg)
@@ -80,6 +85,7 @@ if __name__=='__main__':
     print("The Controller is Running")
     #Run the node
     while not rospy.is_shutdown():
+        
         
         controller.control()
 
