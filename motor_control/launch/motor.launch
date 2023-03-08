@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <node name="motor" pkg="rosserial_python" type="serial_node.py">
+    <param name="port"	type="string"	value="/dev/ttyUSB0"/>   
+    </node>
+    <node pkg="motor" type="Input.py" name="signal_generator" 
+    output="screen" launch-prefix="gnome-terminal --command"/>
+    
+</launch>
