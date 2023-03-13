@@ -2,19 +2,20 @@
 # license removed for brevity
 import rospy
 import numpy as np
-from std_msgs.msg import Float32
+from motor_control.msg import set_point
 
 def talker():
-    signal_pub = rospy.Publisher('setpoint', Float32, queue_size=10)
+    signal_pub = rospy.Publisher('set_point', set_point, queue_size=10)
     rospy.init_node('signal_generator', anonymous=False)
     ti = rospy.get_time()
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
-        t = rospy.get_time() - tisss
-        fun = np.sin(t)
-        word = "time: %s" % t + "sine value: %s" % fun
-        rospy.loginfo(word)
-        signal_pub.publish(fun)
+        t = rospy.get_time() - ti
+        y = np.sin(t) * 100
+        msg = set_point()
+        msg.value = y
+        msg.time = t
+        signal_pub.publish(msg)
         rate.sleep()
 
 if __name__ == '__main__':
