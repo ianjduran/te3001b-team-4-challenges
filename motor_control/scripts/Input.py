@@ -10,7 +10,7 @@ def talker():
     ti = rospy.get_time()
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
-        t = rospy.get_time() - tisss
+        t = rospy.get_time() - ti
         fun = np.sin(t)
         word = "time: %s" % t + "sine value: %s" % fun
         rospy.loginfo(word)
