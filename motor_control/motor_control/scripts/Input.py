@@ -11,14 +11,12 @@ def talker():
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
         t = rospy.get_time() - ti
-        if(t > 5):
-            y = 90
-        else:
-            y = 0
+        y = np.sin(t)
+        
         msg = set_point()
         msg.value = y
         msg.time = t
-        #rospy.loginfo(y)
+        rospy.loginfo(y)
         signal_pub.publish(msg)
         rate.sleep()
 
