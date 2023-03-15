@@ -58,6 +58,7 @@ add_message_files(
   set_point.msg
   motor_input.msg
   motor_output.msg
+  signal_generator_flag.msg
 )
 
 ## Generate services in the 'srv' folder

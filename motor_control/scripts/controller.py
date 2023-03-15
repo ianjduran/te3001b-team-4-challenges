@@ -6,19 +6,19 @@ from std_msgs.msg import Float32
 
 class Controller:
   def __init__(self, dt):
-    self.Kp = rospy.get_param("/control_kp", 0.0)
-    self.Ki = rospy.get_param("/control_ki", 0.0)
-    self.Kd = rospy.get_param("/control_kd", 0.0)
-    self.K = rospy.get_param('/control_K', 1.0)
+    self.Kp = rospy.get_param("control_kp", 0.0)
+    self.Ki = rospy.get_param("control_ki", 0.0)
+    self.Kd = rospy.get_param("control_kd", 0.0)
+    self.K = rospy.get_param('control_K', 1.0)
 
-    rospy.Subscriber("/motor_output", Float32, self.motor_output_cb)
-    rospy.Subscriber("/set_point", set_point, self.setpoint_cb)
+    rospy.Subscriber("motor_output", Float32, self.motor_output_cb)
+    rospy.Subscriber("set_point", set_point, self.setpoint_cb)
 
-    self.motor_pub = rospy.Publisher("/motor_input", Float32, queue_size=1)
-    self.motor_error = rospy.Publisher("/error", Float32, queue_size=1)
-    self.controller_p = rospy.Publisher("/motor_controller/p", Float32, queue_size=10)
-    self.controller_i = rospy.Publisher("/motor_controller/i", Float32, queue_size=10)
-    self.controller_d = rospy.Publisher("/motor_controller/d", Float32, queue_size=10)
+    self.motor_pub = rospy.Publisher("motor_input", Float32, queue_size=1)
+    self.motor_error = rospy.Publisher("error", Float32, queue_size=1)
+    self.controller_p = rospy.Publisher("motor_controller/p", Float32, queue_size=10)
+    self.controller_i = rospy.Publisher("motor_controller/i", Float32, queue_size=10)
+    self.controller_d = rospy.Publisher("motor_controller/d", Float32, queue_size=10)
 
     self.current_setpoint = 0
     self.current_motor_output = 0

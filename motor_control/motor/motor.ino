@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <ros.h>
+#include <math.h>
 #include <std_msgs/Float32.h>
 
 //ROS node handler
@@ -41,7 +42,7 @@ float update_encoder() {
   // Convert counts/ms to rotations/minute
   velocity *= 1000;
   velocity /= 35.0 * 13;  // Convert to rotations per sec
-  velocity *= 60;         // Convert to RPM
+  velocity *= M_PI * 2;         // Convert to rad/s
 
   return velocity;
 }

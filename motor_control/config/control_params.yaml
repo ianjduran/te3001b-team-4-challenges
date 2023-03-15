@@ -1,4 +1,4 @@
-control_kp: 0.00959
-control_ki: 0.00049
+control_kp: 0.055
+control_ki: 0.3
 control_kd: 0.0
-control_K: 1.0
+control_K: 2

@@ -14,8 +14,8 @@ class Characterization:
         self.current_setpoint = 0
 
         self.motor_data = {'time': [], 'velocity': [], 'setpoint': []}
-        rospy.Subscriber("/motor_output", Float32, self.motor_out_cb)
-        self.motor_pub = rospy.Publisher("/motor_input", Float32, queue_size=1)
+        rospy.Subscriber("motor_output", Float32, self.motor_out_cb)
+        self.motor_pub = rospy.Publisher("motor_input", Float32, queue_size=1)
         
     def motor_out_cb(self, msg):
         # Write motor velocity to csv
